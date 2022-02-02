@@ -411,6 +411,26 @@ EXECUTE FUNCTION Auto_Correzione ();
 
 
 
+//PROCEDURA CHE DA LE CORREZIONI DELLE RISPOSTE APERTE
+
+CREATE OR REPLACE PROCEDURE correzione_risp_ape(
+    test TEST.Nome_id%TYPE,
+    studente STUDENTE.id_stud%TYPE,
+    quiz TEST_SVOLTO.id_quizA%TYPE,
+    voto TEST_SVOLTO.punteggio_quiz_dato%TYPE)
+as $$
+declare
+
+BEGIN
+UPDATE TEST_SVOLTO
+SET Punteggio_quiz_dato=voto
+WHERE Nome_id=test AND Id_quizA=quiz AND id_stud=studente;
+
+end; $$ language plpgsql
+
+
+
+
 //POPOLAZIONE DEL DATABASE  
 .................................................................................................................................................................................
 INSERT INTO STUDENTE VALUES('N86003545', 'Marzia', 'Pirozzi', 'marz.pir', 'M2121@');
