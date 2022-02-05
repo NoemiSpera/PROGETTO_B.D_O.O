@@ -6,6 +6,7 @@
 
 ### Informazioni generiche:
 Link per la visione del progetto latex di basi di dati :https://www.overleaf.com/project/61eb059806a27aa854af1555
+
 ---
 ### Per accedere ad database:
 ```
