@@ -429,6 +429,41 @@ WHERE Nome_id=test AND Id_quizA=quiz AND id_stud=studente;
 end; $$ language plpgsql
 
 
+// FUNZIONE PER CONTROLLARE L APPARTENENZA DEL QUIZ AL TEST
+CREATE OR REPLACE FUNCTION quiz_test () RETURNS TRIGGER AS $test_quiz$
+DECLARE 
+
+BEGIN
+
+IF NEW.Id_quizA IS NOT NULL THEN
+
+IF (NEW.Id_quizA NOT IN (SELECT Id_quizA
+    FROM COMPOSIZIONEA
+    WHERE Nome_id=NEW.Nome_id) )THEN
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
+DELETE 
+FROM TEST_SVOLTO
+WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
+END IF;
+
+ELSE 
+    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM
+                        FROM COMPOSIZIONEM
+                        WHERE Nome_id=NEW.Nome_id) )THEN 
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
+DELETE 
+FROM TEST_SVOLTO
+WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
+END IF;
+END IF;
+
+RETURN NEW ;
+END; $test_quiz$ LANGUAGE plpgsql;
+
+CREATE TRIGGER test_quiz
+AFTER INSERT ON TEST_SVOLTO
+FOR EACH ROW
+EXECUTE FUNCTION quiz_test ();
 
 
 //POPOLAZIONE DEL DATABASE  
