@@ -202,8 +202,12 @@ CHECK (orario_fine>orario_inizio);
 
 //VINCOLI SU TEST_SVOLTO
 ALTER TABLE TEST_SVOLTO
-ADD CONSTRAINT unica_risposta_corretta
+ADD CONSTRAINT unica_risposta_correttaM
 UNIQUE (Id_stud, Id_quizM, Risposta_data);
+
+ALTER TABLE TEST_SVOLTO
+ADD CONSTRAINT unica_risposta_correttaA
+UNIQUE (Id_stud, Id_quizA, Risposta_data);
 
 ALTER TABLE TEST_SVOLTO
 ADD CONSTRAINT quiz
