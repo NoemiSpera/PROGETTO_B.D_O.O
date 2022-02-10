@@ -9,7 +9,11 @@ CHECK (VALUE ='A'OR VALUE= 'B' OR VALUE='C' OR VALUE='D');
 CREATE DOMAIN max_lenght AS INT
 CHECK (VALUE > 50);
 
-CREATE DOMAIN pass AS VARCHAR (10);
+La password deve essere composta da più di 8 caratteri, almeno una lettera, almeno un numero e almeno un carattere speciale
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE DOMAIN pass AS VARCHAR (30)
+    CHECK (VALUE ~ '^.(?=.[a-zA-Z])(?=.[0-9])(?=.[+_-!@?/\|.''#$%^&""]).*$'
+        AND VALUE LIKE '__%');
 
 
 
@@ -18,40 +22,40 @@ CREATE DOMAIN pass AS VARCHAR (10);
 
 //TABELLA STUDENTE
 CREATE TABLE STUDENTE ( 
-    Id_stud varchar (30) NOT NULL, 
+    id_studente varchar (30) NOT NULL, 
     Nome varchar (30) NOT NULL, 
     Cognome varchar (30) NOT NULL, 
     Login varchar (10) NOT NULL, 
     Password pass NOT NULL
 );
 ALTER TABLE STUDENTE
-ADD CONSTRAINT studente_pk PRIMARY KEY (Id_stud);
+ADD CONSTRAINT studente_pk PRIMARY KEY (id_studente);
 
 
 //TABELLA INSEGNANTE
 CREATE TABLE INSEGNANTE( 
-    Id_ins varchar(30) NOT NULL, 
+    id_insegnante varchar(30) NOT NULL, 
     Nome varchar(30) NOT NULL, 
     Cognome varchar(30) NOT NULL, 
     Login varchar(10) NOT NULL, 
     Password pass NOT NULL
 );
 ALTER TABLE INSEGNANTE
-ADD CONSTRAINT insegnante_pk PRIMARY KEY (Id_ins);
+ADD CONSTRAINT insegnante_pk PRIMARY KEY (id_insegnante);
 
 
 //TABELLA CORSO
 CREATE TABLE CORSO( 
     Cod_corso varchar(10) NOT NULL, 
     Nome varchar(20) NOT NULL, 
-    Id_ins varchar (30) NOT NULL,
+    id_ins varchar (30) NOT NULL,
     Data_inizio date NOT NULL, 
     Data_fine date NOT NULL
 ); 
 ALTER TABLE CORSO
 ADD CONSTRAINT corso_pk PRIMARY KEY (Cod_corso),
-ADD CONSTRAINT corso_fkb FOREIGN KEY (Id_ins)
-REFERENCES INSEGNANTE (Id_ins)
+ADD CONSTRAINT corso_fkb FOREIGN KEY (id_ins)
+REFERENCES INSEGNANTE (Id_insegnante)
 ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
