@@ -228,7 +228,9 @@ CHECK (Id_quizM IS NOT NULL AND Id_quizA IS NULL OR(Id_quizM IS NULL AND Id_quiz
 create or replace FUNCTION punt_tot(
     test TEST.Nome_id%TYPE,
     studente STUDENTE.id_stud%TYPE)
-returns text as $$
+returns text 
+language plpgsql
+as $$
 declare
 somma real;
 begin
@@ -237,7 +239,7 @@ FROM TEST_SVOLTO
 WHERE Nome_id=test AND id_stud=studente;
 
 return studente||'->'|| test||'->'||somma;
-end; $$ language plpgsql
+end; $$
 
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86003717',1,NULL,'A',NULL);
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86003717',NULL,11,'L IMPERO ROMANO...',9);
@@ -433,6 +435,7 @@ CREATE OR REPLACE PROCEDURE correzione_risp_ape(
     studente STUDENTE.id_stud%TYPE,
     quiz TEST_SVOLTO.id_quizA%TYPE,
     voto TEST_SVOLTO.punteggio_quiz_dato%TYPE)
+language plpgsql
 as $$
 declare
 
@@ -441,7 +444,7 @@ UPDATE TEST_SVOLTO
 SET Punteggio_quiz_dato=voto
 WHERE Nome_id=test AND Id_quizA=quiz AND id_stud=studente;
 
-end; $$ language plpgsql
+end; $$ 
 
 
 // FUNZIONE PER CONTROLLARE L APPARTENENZA DEL QUIZ AL TEST
