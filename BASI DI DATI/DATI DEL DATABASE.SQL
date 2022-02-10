@@ -11,9 +11,8 @@ CHECK (VALUE > 50);
 
 La password deve essere composta da più di 8 caratteri, almeno una lettera, almeno un numero e almeno un carattere speciale
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE DOMAIN pass AS VARCHAR (30)
-    CHECK (VALUE ~ '^.(?=.[a-zA-Z])(?=.[0-9])(?=.[+_-!@?/\|.''#$%^&""]).*$'
-        AND VALUE LIKE '__%');
+CREATE DOMAIN pass AS VARCHAR(130)
+CHECK (VALUE ~ '^.*(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$' AND VALUE LIKE '________%');
 
 
 
@@ -486,27 +485,27 @@ INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86006565',2,NULL, 'A',NULL);
 
 //POPOLAZIONE DEL DATABASE  
 .................................................................................................................................................................................
-INSERT INTO STUDENTE VALUES('N86003545', 'Marzia', 'Pirozzi', 'marz.pir', 'M2121@');
-INSERT INTO STUDENTE VALUES('N86006565', 'Giuseppe', 'Rossi', 'giu.rossi', 'G7722#');
-INSERT INTO STUDENTE VALUES('N86003717', 'Noemi', 'Spera', 'no.spera', 'N6556!');
-INSERT INTO STUDENTE VALUES('N86006363', 'Salvatore', 'Bianchi', 'sal.bian', 'Y8787?');
-INSERT INTO STUDENTE VALUES('N86006889', 'Serena', 'Esposito', 'ser.espos', 'S5523$');
-INSERT INTO STUDENTE VALUES('N86003444', 'Giorgia', 'Caruso', 'jiu.caruso', 'G0606@');
-INSERT INTO STUDENTE VALUES('N86009998', 'Chiara', 'Palma', 'chia.palma', 'C2121_');
-INSERT INTO STUDENTE VALUES('N86001111', 'Martina', 'Esposito', 'mar.esp', 'M7323/');
-INSERT INTO STUDENTE VALUES('N86002121', 'Alessia', 'Bianchi', 'ale.bia', 'A6262@');
-INSERT INTO STUDENTE VALUES('N86005566', 'Federica', 'Pirozzi', 'fede.pir', 'F1111+');
+INSERT INTO STUDENTE VALUES('N86003545', 'Marzia', 'Pirozzi', 'marz.pir', 'Marz2121@');
+INSERT INTO STUDENTE VALUES('N86006565', 'Giuseppe', 'Rossi', 'giu.rossi', 'Gius7722#');
+INSERT INTO STUDENTE VALUES('N86003717', 'Noemi', 'Spera', 'no.spera', 'Noem6556!');
+INSERT INTO STUDENTE VALUES('N86006363', 'Salvatore', 'Bianchi', 'sal.bian', 'Salva8787^');
+INSERT INTO STUDENTE VALUES('N86006889', 'Serena', 'Esposito', 'ser.espos', 'Sere5523$*');
+INSERT INTO STUDENTE VALUES('N86003444', 'Giorgia', 'Caruso', 'jiu.caruso', 'Giorg0606@');
+INSERT INTO STUDENTE VALUES('N86009998', 'Chiara', 'Palma', 'chia.palma', 'Chiar2121@');
+INSERT INTO STUDENTE VALUES('N86001111', 'Martina', 'Esposito', 'mar.esp', 'Mart7323!');
+INSERT INTO STUDENTE VALUES('N86002121', 'Alessia', 'Bianchi', 'ale.bia', 'Aless6262@');
+INSERT INTO STUDENTE VALUES('N86005566', 'Federica', 'Pirozzi', 'fede.pir', 'Feder1111&');
 
-INSERT INTO INSEGNANTE VALUES ('HJGDJ678','Raffaele','Bonaiuto','R.Bona','Wsx098.');
-INSERT INTO INSEGNANTE VALUES ('ASDV6745','Giorgia','Armani','G.Arma','Plm090?');
-INSERT INTO INSEGNANTE VALUES ('LKJH6543','Alessia','Parenti','AL.Pare','Okm765!');
-INSERT INTO INSEGNANTE VALUES ('FGHJ6549','Roberta','Paganini','R.Paga','Ijn654”');
-INSERT INTO INSEGNANTE VALUES ('GDOA9876','Giulio','Riga','G.Riga','Uhb293_');
-INSERT INTO INSEGNANTE VALUES ('DCSX2314','Roberto','Speranza','R.Spera','Tfx564?');
-INSERT INTO INSEGNANTE VALUES ('HAJS7362','Mario','Ruggiero','M.Rugg','n546#');
-INSERT INTO INSEGNANTE VALUES ('DAFS9204','Beniamino','Esposito','B.Esp','Rgn733?');
-INSERT INTO INSEGNANTE VALUES ('GTEY6378','Barbara','Delia','B.Deli','Thm837.');
-INSERT INTO INSEGNANTE VALUES ('DGHF7347','Vincenzo','Ferrara','V.Ferr','Qaz167-');
+INSERT INTO INSEGNANTE VALUES ('HJGDJ678','Raffaele','Bonaiuto','R.Bona','Raffa0983!');
+INSERT INTO INSEGNANTE VALUES ('ASDV6745','Giorgia','Armani','G.Arma','Giorg0909@');
+INSERT INTO INSEGNANTE VALUES ('LKJH6543','Alessia','Parenti','AL.Pare','Aless7657#');
+INSERT INTO INSEGNANTE VALUES ('FGHJ6549','Roberta','Paganini','R.Paga','Robe6546&');
+INSERT INTO INSEGNANTE VALUES ('GDOA9876','Giulio','Riga','G.Riga','Giul2934%');
+INSERT INTO INSEGNANTE VALUES ('DCSX2314','Roberto','Speranza','R.Spera','Robe5643^');
+INSERT INTO INSEGNANTE VALUES ('HAJS7362','Mario','Ruggiero','M.Rugg','Mari5462&');
+INSERT INTO INSEGNANTE VALUES ('DAFS9204','Beniamino','Esposito','B.Esp','Benia7336*');
+INSERT INTO INSEGNANTE VALUES ('GTEY6378','Barbara','Delia','B.Deli','Barb8378!');
+INSERT INTO INSEGNANTE VALUES ('DGHF7347','Vincenzo','Ferrara','V.Ferr','Vince1679@');
 
 INSERT INTO CORSO VALUES ('U2535','Basi di dati','ASDV6745','2022-10-08','2022-12-27');
 INSERT INTO CORSO VALUES ('U6362','Logica','DAFS9204','2022-10-06','2023-01-10');
