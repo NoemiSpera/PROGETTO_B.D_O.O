@@ -22,40 +22,40 @@ CREATE DOMAIN pass AS VARCHAR (30)
 
 //TABELLA STUDENTE
 CREATE TABLE STUDENTE ( 
-    id_studente varchar (30) NOT NULL, 
+    Id_stud varchar (30) NOT NULL, 
     Nome varchar (30) NOT NULL, 
     Cognome varchar (30) NOT NULL, 
     Login varchar (10) NOT NULL, 
     Password pass NOT NULL
 );
 ALTER TABLE STUDENTE
-ADD CONSTRAINT studente_pk PRIMARY KEY (id_studente);
+ADD CONSTRAINT studente_pk PRIMARY KEY (Id_stud);
 
 
 //TABELLA INSEGNANTE
 CREATE TABLE INSEGNANTE( 
-    id_insegnante varchar(30) NOT NULL, 
+    Id_ins varchar(30) NOT NULL, 
     Nome varchar(30) NOT NULL, 
     Cognome varchar(30) NOT NULL, 
     Login varchar(10) NOT NULL, 
     Password pass NOT NULL
 );
 ALTER TABLE INSEGNANTE
-ADD CONSTRAINT insegnante_pk PRIMARY KEY (id_insegnante);
+ADD CONSTRAINT insegnante_pk PRIMARY KEY (Id_ins);
 
 
 //TABELLA CORSO
 CREATE TABLE CORSO( 
     Cod_corso varchar(10) NOT NULL, 
     Nome varchar(20) NOT NULL, 
-    id_ins varchar (30) NOT NULL,
+    Id_ins varchar (30) NOT NULL,
     Data_inizio date NOT NULL, 
     Data_fine date NOT NULL
 ); 
 ALTER TABLE CORSO
 ADD CONSTRAINT corso_pk PRIMARY KEY (Cod_corso),
-ADD CONSTRAINT corso_fkb FOREIGN KEY (id_ins)
-REFERENCES INSEGNANTE (Id_insegnante)
+ADD CONSTRAINT corso_fkb FOREIGN KEY (Id_ins)
+REFERENCES INSEGNANTE (Id_inse)
 ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
@@ -113,17 +113,17 @@ CREATE TABLE TEST_SVOLTO(
     Punteggio_quiz_dato real
 );
 ALTER TABLE TEST_SVOLTO
-ADD CONSTRAINT test_svolto_fka FOREIGN KEY(id_stud)
-REFERENCES STUDENTE(id_stud) 
+ADD CONSTRAINT test_svolto_fka FOREIGN KEY(Id_stud)
+REFERENCES STUDENTE(Id_stud) 
 ON UPDATE CASCADE ON DELETE RESTRICT,
 ADD CONSTRAINT test_svolto_fkb FOREIGN KEY (Nome_id)
 REFERENCES TEST (Nome_id)
 ON UPDATE CASCADE ON DELETE RESTRICT,
-ADD CONSTRAINT test_svolto_fkc FOREIGN KEY(id_quizA)
-REFERENCES QUIZ_RISP_APE(id_quiz)
+ADD CONSTRAINT test_svolto_fkc FOREIGN KEY(Id_quizA)
+REFERENCES QUIZ_RISP_APE(Id_quiz)
 ON UPDATE CASCADE ON DELETE RESTRICT,
-ADD CONSTRAINT test_svolto_fkd FOREIGN KEY(id_quizM)
-REFERENCES QUIZ_RISP_MUL(id_quiz)
+ADD CONSTRAINT test_svolto_fkd FOREIGN KEY(Id_quizM)
+REFERENCES QUIZ_RISP_MUL(Id_quiz)
 ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
