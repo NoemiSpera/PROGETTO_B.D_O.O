@@ -5,14 +5,14 @@
 .................................................................................................................................................................................
 CREATE DOMAIN risp AS VARCHAR (20)
 CHECK (VALUE ='A'OR VALUE= 'B' OR VALUE='C' OR VALUE='D');
+// la risposta può esssere solo una delle opzioni disponibili (es. non può essere Z) 
 
 CREATE DOMAIN max_lenght AS INT
 CHECK (VALUE > 50);
+// la lunghezza della risposta deve essere lunga più di 50 caratteri
 
-La password deve essere composta da più di 8 caratteri, almeno una lettera, almeno un numero e almeno un carattere speciale
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE DOMAIN pass AS VARCHAR(130)
 CHECK (VALUE ~ '^.*(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$' AND VALUE LIKE '________%');
+//La password deve essere composta da più di 8 caratteri, almeno una lettera, almeno un numero e almeno un carattere speciale
 
 
 
@@ -125,6 +125,8 @@ ADD CONSTRAINT test_svolto_fkd FOREIGN KEY(Id_quizM)
 REFERENCES QUIZ_RISP_MUL(Id_quiz)
 ON UPDATE CASCADE ON DELETE RESTRICT;
 
+// se id_quizA è NULL id_quizM è NOT NULL e viceversa (implementato con vincolo)
+
 
 //TABELLA FREQUENTA 
 CREATE TABLE FREQUENTA( 
@@ -171,50 +173,56 @@ ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 
-// DEFINIZIONE DI VINCOLI PIU COMPLESSI
+// DEFINIZIONE DI ALTRI VINCOLI
 .................................................................................................................................................................................
 
 //VINCOLI SU STUDENTE
 ALTER TABLE STUDENTE
 ADD CONSTRAINT login_stud
 UNIQUE(login);
-
+// nella tabella studente non ci possono essere due studenti con lo stesso login
 
 //VINCOLI SU INSEGNANTE
 ALTER TABLE INSEGNANTE
 ADD CONSTRAINT login_ins
 UNIQUE(login);
-
+// nella tabella insegnante non ci possono essere due insegnanti con lo stesso login
 
 //VINCOLI SUL CORSO
 ALTER TABLE CORSO
 ADD CONSTRAINT correttezza_data_fine
 CHECK (Data_fine > Data_inizio);
+// la data di fine del corso deve essere successiva alla data di inizio
 
 
 //VINCOLI SU TEST
 ALTER TABLE TEST
 ADD CONSTRAINT numero_quiz
 CHECK (n_quiz>=1);
-
+// un test deve contenere almeno un quiz
 
 ALTER TABLE TEST
 ADD CONSTRAINT correttezza_orario_fine
 CHECK (orario_fine>orario_inizio);
+// l orario di fine di un quiz deve essere successivo all orario di inizio
 
 
 //VINCOLI SU TEST_SVOLTO
 ALTER TABLE TEST_SVOLTO
 ADD CONSTRAINT unica_risposta_correttaM
 UNIQUE (Id_stud, Id_quizM, Risposta_data);
+// per ogni quiz a risposta multipla lo studente può dare una sola risposta
 
 ALTER TABLE TEST_SVOLTO
 ADD CONSTRAINT unica_risposta_correttaA
 UNIQUE (Id_stud, Id_quizA, Risposta_data);
+// per ogni quiz a risposta aperta lo studente può dare una sola risposta
 
 ALTER TABLE TEST_SVOLTO
 ADD CONSTRAINT quiz
 CHECK (Id_quizM IS NOT NULL AND Id_quizA IS NULL OR(Id_quizM IS NULL AND Id_quizA IS  NOT NULL));
+// se id_quizA è NULL id_quizM è NOT NULL e viceversa 
+
 
 
 
@@ -234,16 +242,19 @@ as $$
 declare
 somma real;
 begin
-SELECT SUM(Punteggio_quiz_dato) INTO somma
+
+SELECT SUM(Punteggio_quiz_dato) INTO somma  //somma i punteggi ottenuti dallo studente dato in input in ogni quiz del test dato in input
 FROM TEST_SVOLTO
 WHERE Nome_id=test AND id_stud=studente;
 
 return studente||'->'|| test||'->'||somma;
 end; $$
 
+//prova di correttezza
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86003717',1,NULL,'A',NULL);
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86003717',NULL,11,'L IMPERO ROMANO...',9);
 SELECT punt_tot ('FAG56455','N86003717');
+// output: N86003717->FAG56455->9
 
 
 
@@ -255,18 +266,18 @@ DECLARE
 data_fine_corso CORSO.Data_fine % TYPE;
 BEGIN
 
-SELECT Data_fine INTO data_fine_corso
+SELECT Data_fine INTO data_fine_corso // prende la data di fine del corso che viene inserito 
 FROM CORSO
 WHERE Cod_corso=NEW.Cod_corso;
 
-IF NEW.Data > data_fine_corso THEN
+IF NEW.Data > data_fine_corso THEN // se la data di svolgimento del test è successiva alla fine del corso inserisce la tupla nella tabella test
 RETURN NEW;
 
 ELSE 
 RAISE NOTICE 'Il test non si può svolgere prima della fine del corso';
 DELETE
 FROM TEST
-WHERE Nome_id=NEW.Nome_id;
+WHERE Nome_id=NEW.Nome_id; //altrimenti stampa il messaggio e elimina la tupla dalla tabella test
 
 END IF;
 
@@ -276,31 +287,33 @@ END; $Dataq$ LANGUAGE plpgsql;
 CREATE TRIGGER Dataq
 AFTER INSERT ON TEST
 FOR EACH ROW
-EXECUTE FUNCTION data_quiz ();
+EXECUTE FUNCTION data_quiz (); // trigger esegue la funzione dopo ogni insert su test
 
+// prova di correttezza
 INSERT INTO CORSO VALUES ('HFOEU1','Basi di dati','ASDV6745','2022-10-08','2022-12-27');
 INSERT INTO TEST VALUES('BKSKSNKFI',2,'2022-10-07','14:00:00','16:00:00','HFOEU1');
+// output: Il test non si può svolgere prima della fine del corso
+// il corso viene inserito correttamente mentre il test non risulta inserito
 
 
-
-//FUNZIONE CHE CONTROLLA L'UNICITA DEL LOGIN DELL'INSEGNANTE
+//FUNZIONE CHE CONTROLLA L UNICITA DEL LOGIN DELL INSEGNANTE
 
 CREATE OR REPLACE FUNCTION ins_log () RETURNS TRIGGER AS $log_ins$
 DECLARE 
 stud CURSOR IS(
 SELECT login
-FROM Studente);
+FROM Studente); //scorre i login di tutti gli studenti
 BEGIN
 
 FOR el IN stud
 LOOP
-IF NEW.Login=el.login THEN
-RAISE NOTICE 'Questo login è già esistente';
+IF NEW.Login=el.login THEN     // il login dell insegante viene confrontato con il login di tutti gli studenti
+RAISE NOTICE 'Questo login è già esistente'; // se coincide viene stampato il messaggio e la tupla va eliminata da insegnante
 DELETE 
 FROM INSEGNANTE
 WHERE Id_ins=NEW.Id_ins;
 
-ELSE
+ELSE           //altrimenti la tupla viene inserita correttamente
 END IF;
 END LOOP;
 
@@ -310,7 +323,7 @@ END; $log_ins$ LANGUAGE plpgsql;
 CREATE TRIGGER log_ins
 AFTER INSERT ON INSEGNANTE
 FOR EACH ROW
-EXECUTE FUNCTION ins_log ();
+EXECUTE FUNCTION ins_log (); //la funzione viene eseguita dopo ogni insert su insegnante
 
 
 
@@ -321,19 +334,19 @@ CREATE OR REPLACE FUNCTION stud_log () RETURNS TRIGGER AS $log_stud$
 DECLARE 
 ins CURSOR IS(
 SELECT login
-FROM INSEGNANTE);
+FROM INSEGNANTE); //scorre i login di tutti gli insegnanti
 BEGIN
 
 FOR el IN ins
 LOOP
-IF NEW.login=el.login THEN
-RAISE NOTICE 'Questo login è già esistente';
+IF NEW.login=el.login THEN   // il login dello studnete viene confrontato con il login di tutti gli insegnanti
+RAISE NOTICE 'Questo login è già esistente'; // se coincide viene stampato il messaggio e la tupla va eliminata da insegnante
 DELETE 
 FROM STUDENTE
-WHERE Id_stud=NEW.Id_stud;
+WHERE Id_stud=NEW.Id_stud; 
 
-ELSE
-END IF;
+ELSE 
+END IF;   //altrimenti la tupla viene inserita correttamente
 END LOOP;
 
 RETURN NEW;
@@ -342,10 +355,20 @@ END; $log_stud$ LANGUAGE plpgsql;
 CREATE TRIGGER log_stud
 AFTER INSERT ON STUDENTE
 FOR EACH ROW
-EXECUTE FUNCTION stud_log ();
+EXECUTE FUNCTION stud_log (); //la funzione viene eseguita dopo ogni insert su studente
 
+
+//prova di correttezza
 INSERT INTO STUDENTE VALUES('N86006574', 'Roberta', 'Bonapasta', 'R.Bona', 'Robe2121@');
 INSERT INTO INSEGNANTE VALUES ('HDLMEON','Raffaele','Bonaiuto','R.Bona','Raffa098!');
+//output: Questo login è già esistente
+//lo studente viene inserito correttamente, l insegnante non risulta inserito
+
+//per fare la prova opposta eleminare le precedenti insert e ripeterele al contrario
+INSERT INTO INSEGNANTE VALUES ('HDLMEON','Raffaele','Bonaiuto','R.Bona','Raffa098!');
+INSERT INTO STUDENTE VALUES('N86006574', 'Roberta', 'Bonapasta', 'R.Bona', 'Robe2121@');
+//output: Questo login è già esistente
+//l insegnante viene inserito correttamente, lo studente non risulta inserito
 
 
 //FUNZIONE CHE CONTROLLA IL PUNTEGGIO ASSEGNATATO AD UN QUIZ A RISPOSTA APERTA
@@ -356,20 +379,20 @@ punteggio_max QUIZ_RISP_APE.punt_max% TYPE;
 punteggio_min QUIZ_RISP_APE.punt_min% TYPE;
 BEGIN
 
-SELECT punt_max INTO punteggio_max
+SELECT punt_max INTO punteggio_max  // si prende il punteggio massimo assegnabile al quiz inserito
 FROM QUIZ_RISP_APE
 WHERE Id_quiz=NEW.Id_quizA;
 
-SELECT punt_min INTO punteggio_min
+SELECT punt_min INTO punteggio_min  // si prende il punteggio minimo assegnabile al quiz inserito
 FROM QUIZ_RISP_APE
 WHERE Id_quiz=NEW.Id_quizA;
 
 
-IF NEW.Id_quizA IS NOT NULL AND (NEW.Punteggio_quiz_dato BETWEEN punteggio_min AND punteggio_max) THEN
+IF NEW.Id_quizA IS NOT NULL AND (NEW.Punteggio_quiz_dato BETWEEN punteggio_min AND punteggio_max) THEN //se il punteggio assegnato dall insegnante è compreso tra il max e il min la tupla viene inserita correttamente
 RETURN NEW;
 END IF;
 
-IF NEW.Id_quizA IS NOT NULL AND (NEW.Punteggio_quiz_dato  NOT BETWEEN punteggio_min AND punteggio_max) THEN
+IF NEW.Id_quizA IS NOT NULL AND (NEW.Punteggio_quiz_dato  NOT BETWEEN punteggio_min AND punteggio_max) THEN //altrimenti la tupla viene cancellata e si stampa il messaggio
 DELETE 
 FROM TEST_SVOLTO
 WHERE Nome_id=NEW.Nome_id;
@@ -382,10 +405,12 @@ END; $punteggio$ LANGUAGE plpgsql;
 CREATE TRIGGER punteggio
 AFTER INSERT ON TEST_SVOLTO
 FOR EACH ROW
-EXECUTE FUNCTION punteggio_assegnato ();
+EXECUTE FUNCTION punteggio_assegnato (); //la funzione viene svolta dopo ogni insert su test_svolto
 
+//prova di correttezza
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86006565',NULL,11, 'IFUYGFU',100);
-
+//output: ERRORE, il punteggio non riesntra nel range consentito
+// la tupla non risulta inserita
 
 
 //FUNZIONE CHE CORREGGE AUTOMATICAMENTE IL QUIZ A RISPOSTA MULTIPLA
@@ -395,13 +420,13 @@ DECLARE
 risp QUIZ_RISP_MUL.Risposta_c % TYPE;
 BEGIN
 
-IF NEW.Id_quizA IS NULL THEN
+IF NEW.Id_quizA IS NULL THEN         // vanno corrette automaticamente solo le risposte dei quiz a risposta multipla, cioè dove id_quizA è NULL e quindi id_quizM è NOT NULL
 
-SELECT Risposta_c INTO risp
+SELECT Risposta_c INTO risp          //si prende la risposta corretta al quiz a risposta multipla
 FROM QUIZ_RISP_MUL
 WHERE Id_quiz=NEW.Id_quizM;
 
-IF NEW.Risposta_data=risp THEN
+IF NEW.Risposta_data=risp THEN       //se la risposta data è corretta si aggiorna il punteggio assegnato (precedentemente NULL in quanto non corretto) con il punteggio max per quel quiz
 UPDATE TEST_SVOLTO
 SET Punteggio_quiz_dato =(SELECT punt_c
                           FROM QUIZ_RISP_MUL
@@ -410,7 +435,7 @@ WHERE Nome_id=NEW.Nome_id AND Id_quizM=NEW.Id_quizM AND Id_Stud=NEW.Id_stud;
 
 ELSE
 
-UPDATE TEST_SVOLTO
+UPDATE TEST_SVOLTO                             //se la risposta data è errata si aggiorna il punteggio assegnato (precedentemente NULL in quanto non corretto) con il punteggio min per quel quiz
 SET Punteggio_quiz_dato =(SELECT punt_e
                           FROM QUIZ_RISP_MUL
                           WHERE Id_quiz= NEW.Id_quizM)
@@ -425,17 +450,17 @@ END; $Correzione$ LANGUAGE plpgsql;
 CREATE TRIGGER Correzione
 AFTER INSERT ON TEST_SVOLTO
 FOR EACH ROW
-EXECUTE FUNCTION Auto_Correzione ();
+EXECUTE FUNCTION Auto_Correzione (); //la funzione viene eseguita dopo ogni insert su test_svolto
 
 
 
-//PROCEDURA CHE DA LE CORREZIONI DELLE RISPOSTE APERTE
+//PROCEDURA PER ASSEGNARE UN VOTO ALLE RISPOSTE APERTE
 
 CREATE OR REPLACE PROCEDURE correzione_risp_ape(
     test TEST.Nome_id%TYPE,
     studente STUDENTE.id_stud%TYPE,
     quiz TEST_SVOLTO.id_quizA%TYPE,
-    voto TEST_SVOLTO.punteggio_quiz_dato%TYPE)
+    voto TEST_SVOLTO.punteggio_quiz_dato%TYPE) //prende in input il test, lo studente, il quiz e il voto che si vuole assegnare
 language plpgsql
 as $$
 declare
@@ -443,7 +468,7 @@ declare
 BEGIN
 UPDATE TEST_SVOLTO
 SET Punteggio_quiz_dato=voto
-WHERE Nome_id=test AND Id_quizA=quiz AND id_stud=studente;
+WHERE Nome_id=test AND Id_quizA=quiz AND id_stud=studente; //si aggiorna il punteggio assegnato (precedentemente NULL in quanto non corretto) con il punteggio dato dall insegnante
 
 end; $$ 
 
@@ -454,27 +479,27 @@ DECLARE
 
 BEGIN
 
-IF NEW.Id_quizA IS NOT NULL THEN
+IF NEW.Id_quizA IS NOT NULL THEN                   //controllo se il quiz è a risposta aperta
 
-IF (NEW.Id_quizA NOT IN (SELECT Id_quizA
+IF (NEW.Id_quizA NOT IN (SELECT Id_quizA           // se a quel test non è associato quel quiz
     FROM COMPOSIZIONEA
     WHERE Nome_id=NEW.Nome_id) )THEN
-RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test'; //stampa il messaggio e elimina la tupla da test svolto
 DELETE 
 FROM TEST_SVOLTO
 WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
 END IF;
 
-ELSE 
-    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM
+ELSE                                              //controllo se il quiz è a risposta chiusa
+    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM       //se a quel test non è associato quel quiz
                         FROM COMPOSIZIONEM
                         WHERE Nome_id=NEW.Nome_id) )THEN 
-RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';  //stampa il messaggio e elimina la tupla da test svolto
 DELETE 
 FROM TEST_SVOLTO
 WHERE Nome_id=NEW.Nome_id AND Id_quizM=NEW.Id_quizM AND Id_stud=NEW.Id_stud;
 END IF;
-END IF;
+END IF;                                                 //sia per i quiz a risposta aperta che multipla, se sono associati a quel test vengono inseriti normalmente
 
 RETURN NEW ;
 END; $test_quiz$ LANGUAGE plpgsql;
@@ -482,9 +507,12 @@ END; $test_quiz$ LANGUAGE plpgsql;
 CREATE TRIGGER test_quiz
 AFTER INSERT ON TEST_SVOLTO
 FOR EACH ROW
-EXECUTE FUNCTION quiz_test ();
+EXECUTE FUNCTION quiz_test ();  //la funzione viene svolta dopo ogni insert su test svolto
 
+//prova di correttezza
 INSERT INTO TEST_SVOLTO VALUES('FAG56455','N86006565',2,NULL, 'A',NULL);
+//output: ERRORE,il quiz non appartiene al test
+// la tupla non risulta inserita
 
 
 //POPOLAZIONE DEL DATABASE  
