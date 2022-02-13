@@ -11,7 +11,7 @@ Link per il documento in latex di basi di dati :https://www.overleaf.com/project
 ### Per accedere ad database:
 ```
 User: professore
-Password: 30elode
-Host: ls-63ccf0934b46d75c063a818ba40de714b83521c9.c5uty6bg7pgc.eu-west-2.rds.amazonaws.com
+Password: silviobarra
+Host: ls-30529483c43bfa0564a80cc53b17817c743096c7.c5uty6bg7pgc.eu-west-2.rds.amazonaws.com
 Port: 5432
 ```
