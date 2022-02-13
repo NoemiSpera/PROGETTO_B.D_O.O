@@ -293,7 +293,7 @@ EXECUTE FUNCTION data_quiz (); // trigger esegue la funzione dopo ogni insert su
 
 // prova di correttezza
 INSERT INTO CORSO VALUES ('HFOEU1','Basi di dati','ASDV6745','2022-10-08','2022-12-27');
-INSERT INTO TEST VALUES('BKSKSNKFI',2,'2022-10-07','14:00:00','16:00:00','HFOEU1');
+INSERT INTO TEST VALUES('BKSKSNKFI',2,'2022-10-07','14:00:00','16:00:00','HFOEU1','LKJH6543');
 // output: Il test non si può svolgere prima della fine del corso
 // il corso viene inserito correttamente mentre il test non risulta inserito
 
@@ -410,6 +410,7 @@ FOR EACH ROW
 EXECUTE FUNCTION punteggio_assegnato (); //la funzione viene svolta dopo ogni insert su QUIZ_SVOLTI
 
 //prova di correttezza
+DELETE FROM QUIZ_SVOLTI WHERE nome_id='FAG56455' AND id_stud='N86006565' AND id_quizA='11';
 INSERT INTO QUIZ_SVOLTI VALUES('FAG56455','N86006565',NULL,11, 'IFUYGFU',100);
 //output: ERRORE, il punteggio non riesntra nel range consentito
 // la tupla non risulta inserita
