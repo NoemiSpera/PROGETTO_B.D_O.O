@@ -85,10 +85,12 @@ CREATE TABLE QUIZ_RISP_MUL(
     D varchar(100) NOT NULL, 
     Risposta_c risp NOT NULL, 
     Punt_c int NOT NULL, 
-    Punt_e int NOT NULL
+    Punt_e int NOT NULL,
+    Nome_id varchar(30) NOT NULL
 ); 
 ALTER TABLE QUIZ_RISP_MUL
-ADD CONSTRAINT quiz_risp_mul_pk PRIMARY KEY (Id_quiz);
+ADD CONSTRAINT quiz_risp_mul_pk PRIMARY KEY (Id_quiz),
+ADD CONSTRAINT quiz_risp_mul_fk FOREIGN KEY (Nome_id) REFERENCES TEST (Nome_id);
 
 
 
@@ -98,10 +100,12 @@ CREATE TABLE QUIZ_RISP_APE(
     Domanda varchar (200) NOT NULL, 
     Lenght_risp max_lenght NOT NULL, 
     Punt_max real NOT NULL, 
-    Punt_min real NOT NULL
+    Punt_min real NOT NULL,
+    Nome_id varchar(30) NOT NULL
 ); 
 ALTER TABLE QUIZ_RISP_APE
-ADD CONSTRAINT quiz_risp_ape_pk PRIMARY KEY (Id_quiz);
+ADD CONSTRAINT quiz_risp_ape_pk PRIMARY KEY (Id_quiz),
+ADD CONSTRAINT quiz_risp_ape_fk FOREIGN KEY (Nome_id) REFERENCES TEST (Nome_id);
 
 
 //TABELLA QUIZ_SVOLTI
@@ -142,37 +146,6 @@ ON UPDATE CASCADE ON DELETE RESTRICT,
 ADD CONSTRAINT frequenta_fkb FOREIGN KEY(Cod_corso)
 REFERENCES CORSO (Cod_corso)
 ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
-
-//TABELLA COMPOSIZIONE A 
-CREATE TABLE COMPOSIZIONEA( 
-    Id_quizA varchar (10) NOT NULL,
-    Nome_id varchar (30) NOT NULL
-); 
-ALTER TABLE COMPOSIZIONEA
-ADD CONSTRAINT compa_fka FOREIGN KEY(Id_quizA)
-REFERENCES QUIZ_RISP_APE (Id_quiz) 
-ON UPDATE CASCADE ON DELETE RESTRICT,
-ADD CONSTRAINT compa_fkb FOREIGN KEY(Nome_id)
-REFERENCES TEST (Nome_id) 
-ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
-
-//TABELLA COMPOSIZIONE M
-CREATE TABLE COMPOSIZIONEM( 
-    Id_quizM varchar(10) NOT NULL, 
-    Nome_id varchar(30) NOT NULL
-);
-ALTER TABLE COMPOSIZIONEM
-ADD CONSTRAINT compm_fka FOREIGN KEY(Id_quizM)
-REFERENCES QUIZ_RISP_MUL (Id_quiz) 
-ON UPDATE CASCADE ON DELETE RESTRICT,
-ADD CONSTRAINT compm_fkb FOREIGN KEY(Nome_id)
-REFERENCES TEST (Nome_id)  
-ON UPDATE CASCADE ON DELETE RESTRICT;
-
 
 
 // DEFINIZIONE DI ALTRI VINCOLI
@@ -482,27 +455,27 @@ DECLARE
 
 BEGIN
 
-IF NEW.Id_quizA IS NOT NULL THEN                   //controllo se il quiz è a risposta aperta
+IF NEW.Id_quizA IS NOT NULL THEN
 
-IF (NEW.Id_quizA NOT IN (SELECT Id_quizA           // se a quel test non è associato quel quiz
+IF (NEW.Id_quizA NOT IN (SELECT Id_quizA
     FROM COMPOSIZIONEA
     WHERE Nome_id=NEW.Nome_id) )THEN
-RAISE NOTICE 'ERRORE,il quiz non appartiene al test'; //stampa il messaggio e elimina la tupla da test svolto
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
 DELETE 
 FROM QUIZ_SVOLTI
 WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
 END IF;
 
-ELSE                                              //controllo se il quiz è a risposta chiusa
-    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM       //se a quel test non è associato quel quiz
+ELSE 
+    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM
                         FROM COMPOSIZIONEM
                         WHERE Nome_id=NEW.Nome_id) )THEN 
-RAISE NOTICE 'ERRORE,il quiz non appartiene al test';  //stampa il messaggio e elimina la tupla da test svolto
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
 DELETE 
 FROM QUIZ_SVOLTI
 WHERE Nome_id=NEW.Nome_id AND Id_quizM=NEW.Id_quizM AND Id_stud=NEW.Id_stud;
 END IF;
-END IF;                                                 //sia per i quiz a risposta aperta che multipla, se sono associati a quel test vengono inseriti normalmente
+END IF;
 
 RETURN NEW ;
 END; $test_quiz$ LANGUAGE plpgsql;
@@ -510,7 +483,7 @@ END; $test_quiz$ LANGUAGE plpgsql;
 CREATE TRIGGER test_quiz
 AFTER INSERT ON QUIZ_SVOLTI
 FOR EACH ROW
-EXECUTE FUNCTION quiz_test ();  //la funzione viene svolta dopo ogni insert su test svolto
+EXECUTE FUNCTION quiz_test ();
 
 //prova di correttezza
 INSERT INTO QUIZ_SVOLTI VALUES('FAG56455','N86006565',2,NULL, 'A',NULL);
