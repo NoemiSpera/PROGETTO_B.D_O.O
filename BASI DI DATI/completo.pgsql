@@ -344,8 +344,8 @@ BEGIN
 
 IF NEW.Id_quizA IS NOT NULL THEN
 
-IF (NEW.Id_quizA NOT IN (SELECT Id_quizA
-    FROM COMPOSIZIONEA
+IF (NEW.Id_quizA NOT IN (SELECT Id_quiz
+    FROM QUIZ_RISP_APE
     WHERE Nome_id=NEW.Nome_id) )THEN
 RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
 DELETE 
@@ -354,8 +354,8 @@ WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
 END IF;
 
 ELSE 
-    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM
-                        FROM COMPOSIZIONEM
+    IF( NEW.Id_quizM NOT IN (SELECT Id_quiz
+                        FROM QUIZ_RISP_MUL
                         WHERE Nome_id=NEW.Nome_id) )THEN 
 RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
 DELETE 
