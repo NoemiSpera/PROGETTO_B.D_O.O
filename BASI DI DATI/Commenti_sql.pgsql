@@ -455,19 +455,19 @@ DECLARE
 
 BEGIN
 
-IF NEW.Id_quizA IS NOT NULL THEN
+IF NEW.Id_quizA IS NOT NULL THEN                                //se si tratta di un quiz a risposta aperta
 
-IF (NEW.Id_quizA NOT IN (SELECT Id_quizA
-    FROM COMPOSIZIONEA
-    WHERE Nome_id=NEW.Nome_id) )THEN
-RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
+IF (NEW.Id_quizA NOT IN (SELECT Id_quiz
+    FROM QUIZ_RISP_APE                                           //controlliamo che quel quiz sia effettivamente in quel test   
+    WHERE Nome_id=NEW.Nome_id) )THEN                            
+RAISE NOTICE 'ERRORE,il quiz non appartiene al test';            //altrimenti stampa messaggio e elimina tupla da quiz_svolti
 DELETE 
 FROM QUIZ_SVOLTI
 WHERE Nome_id=NEW.Nome_id AND Id_quizA=NEW.Id_quizA AND Id_stud=NEW.Id_stud;
 END IF;
 
-ELSE 
-    IF( NEW.Id_quizM NOT IN (SELECT Id_quizM
+ELSE                                                              //stessa cosa per i quiz a risposta multipla
+    IF( NEW.Id_quizM NOT IN (SELECT Id_quiz
                         FROM COMPOSIZIONEM
                         WHERE Nome_id=NEW.Nome_id) )THEN 
 RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
@@ -483,7 +483,7 @@ END; $test_quiz$ LANGUAGE plpgsql;
 CREATE TRIGGER test_quiz
 AFTER INSERT ON QUIZ_SVOLTI
 FOR EACH ROW
-EXECUTE FUNCTION quiz_test ();
+EXECUTE FUNCTION quiz_test ();   //la funzione viene eseguita dopo ogni insert su quiz_svolti
 
 //prova di correttezza
 INSERT INTO QUIZ_SVOLTI VALUES('FAG56455','N86006565',2,NULL, 'A',NULL);
