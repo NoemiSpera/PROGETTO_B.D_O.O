@@ -468,7 +468,7 @@ END IF;
 
 ELSE                                                              //stessa cosa per i quiz a risposta multipla
     IF( NEW.Id_quizM NOT IN (SELECT Id_quiz
-                        FROM COMPOSIZIONEM
+                        FROM QUIZ_RISP_MUL
                         WHERE Nome_id=NEW.Nome_id) )THEN 
 RAISE NOTICE 'ERRORE,il quiz non appartiene al test';
 DELETE 
