@@ -416,49 +416,27 @@ INSERT INTO TEST VALUES('JDW02845',2,'2022-06-02','12:30:00','15:00:00','U111','
 INSERT INTO TEST VALUES('HSOW0384',2,'2022-06-11','10:00:00','12:30:00','U7932','DGHF7347');
 INSERT INTO TEST VALUES('JAOD8479',2,'2022-12-30','09:00:00','11:00:00','U9821','DCSX2314');
 
-INSERT INTO QUIZ_RISP_APE VALUES('11','Parlami dell Impero Romano',100,10,0);
-INSERT INTO QUIZ_RISP_APE VALUES('12','Descrivimi l apparato digerente',100,12,0);
-INSERT INTO QUIZ_RISP_APE VALUES('13','Che cos è il PIL, argomenta',60,6,0);
-INSERT INTO QUIZ_RISP_APE VALUES('14','Cosa sono le interfacce, e a cosa servono?',150,7,0);
-INSERT INTO QUIZ_RISP_APE VALUES('15','Descrizione dettagliata degli alberi AVL',200,14,0);
-INSERT INTO QUIZ_RISP_APE VALUES('16','Che cos è una matrice associata e come può essere usata?',100,8,0);
-INSERT INTO QUIZ_RISP_APE VALUES('17','Le cellule eucariote e procarite.Argomenta',200,10,0);
-INSERT INTO QUIZ_RISP_APE VALUES('18','Dimostrazione del Numero di Nepero',200,12,0);
-INSERT INTO QUIZ_RISP_APE VALUES('19','Enuncia il teorema degli zeri',200,9,0);
-INSERT INTO QUIZ_RISP_APE VALUES('20','Enuncia il teorema dei valori intermedi',150,9,0);
+INSERT INTO QUIZ_RISP_APE VALUES('11','Parlami dell Impero Romano',100,10,0,'FAG56455');
+INSERT INTO QUIZ_RISP_APE VALUES('12','Descrivimi l apparato digerente',100,12,0),'GSTR6473';
+INSERT INTO QUIZ_RISP_APE VALUES('13','Che cos è il PIL, argomenta',60,6,0,'KDHE7384');
+INSERT INTO QUIZ_RISP_APE VALUES('14','Cosa sono le interfacce, e a cosa servono?',150,7,0,'GDOW8920');
+INSERT INTO QUIZ_RISP_APE VALUES('15','Descrizione dettagliata degli alberi AVL',200,14,0,'YEOA8394');
+INSERT INTO QUIZ_RISP_APE VALUES('16','Che cos è una matrice associata e come può essere usata?',100,8,0,'KAOS2930');
+INSERT INTO QUIZ_RISP_APE VALUES('17','Le cellule eucariote e procarite.Argomenta',200,10,0,'JAOE0293');
+INSERT INTO QUIZ_RISP_APE VALUES('18','Dimostrazione del Numero di Nepero',200,12,0,'JDW02845');
+INSERT INTO QUIZ_RISP_APE VALUES('19','Enuncia il teorema degli zeri',200,9,0,'HSOW0384');
+INSERT INTO QUIZ_RISP_APE VALUES('20','Enuncia il teorema dei valori intermedi',150,9,0,'JAOD8479');
 
-INSERT INTO QUIZ_RISP_MUL VALUES ('1', 'Quanti piedi ha un millepiedi?','10', '100', '1000', 'non ne ha','C', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('2', 'Quanti lati ha un triangolo?','3', '2', '10', 'non ne ha','A', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('3', 'Di che colore è il cielo?','blu', 'rosso', 'verde', 'giallo','A', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('4', 'Quante "a" nella frase "Amo studiare basi di dati"?','5', '100', '3', '4','D', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('5', 'Chi è kira di death note?','light yagami', 'L', 'Il prof Barra', 'io','A', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('6', 'Quante sono le dita di una mano?','10', '100', '1000', '5','D', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('7', 'Quale di questi NON è un colore primario?','rosso', 'verde', 'giallo', 'blu','B', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('8', 'Quant anni per laurearsi alla triennale?','3', '5', '10', 'non ci si laurea','D', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('9', 'Che voto prenderanno Marzia e Noemi a questo esame?','18', '30', '30 cum laude', 'bocciate','C', 10, 0);
-INSERT INTO QUIZ_RISP_MUL VALUES ('10','Cosa si mette nel caffè?','sale', 'zucchero', 'pepe', 'zenzero','B', 10, 0);
-
-INSERT INTO COMPOSIZIONEA VALUES ('11','FAG56455');
-INSERT INTO COMPOSIZIONEA VALUES ('12','GSTR6473');
-INSERT INTO COMPOSIZIONEA VALUES ('13','KDHE7384');
-INSERT INTO COMPOSIZIONEA VALUES ('14','GDOW8920');
-INSERT INTO COMPOSIZIONEA VALUES ('15','YEOA8394');
-INSERT INTO COMPOSIZIONEA VALUES ('16','KAOS2930');
-INSERT INTO COMPOSIZIONEA VALUES ('17','JAOE0293');
-INSERT INTO COMPOSIZIONEA VALUES ('18','JDW02845');
-INSERT INTO COMPOSIZIONEA VALUES ('19','HSOW0384');
-INSERT INTO COMPOSIZIONEA VALUES ('20','JAOD8479');
-
-INSERT INTO COMPOSIZIONEM VALUES ('1','FAG56455');
-INSERT INTO COMPOSIZIONEM VALUES ('2','GSTR6473');
-INSERT INTO COMPOSIZIONEM VALUES ('3','KDHE7384');
-INSERT INTO COMPOSIZIONEM VALUES ('4','GDOW8920');
-INSERT INTO COMPOSIZIONEM VALUES ('5','YEOA8394');
-INSERT INTO COMPOSIZIONEM VALUES ('6','KAOS2930');
-INSERT INTO COMPOSIZIONEM VALUES ('7','JAOE0293');
-INSERT INTO COMPOSIZIONEM VALUES ('8','JDW02845');
-INSERT INTO COMPOSIZIONEM VALUES ('9','HSOW0384');
-INSERT INTO COMPOSIZIONEM VALUES ('10','JAOD8479');
+INSERT INTO QUIZ_RISP_MUL VALUES ('1', 'Quanti piedi ha un millepiedi?','10', '100', '1000', 'non ne ha','C', 10, 0,'FAG56455');
+INSERT INTO QUIZ_RISP_MUL VALUES ('2', 'Quanti lati ha un triangolo?','3', '2', '10', 'non ne ha','A', 10, 0,'GSTR6473');
+INSERT INTO QUIZ_RISP_MUL VALUES ('3', 'Di che colore è il cielo?','blu', 'rosso', 'verde', 'giallo','A', 10, 0,'KDHE7384');
+INSERT INTO QUIZ_RISP_MUL VALUES ('4', 'Quante "a" nella frase "Amo studiare basi di dati"?','5', '100', '3', '4','D', 10, 0,'GDOW8920');
+INSERT INTO QUIZ_RISP_MUL VALUES ('5', 'Chi è kira di death note?','light yagami', 'L', 'Il prof Barra', 'io','A', 10, 0,'YEOA8394');
+INSERT INTO QUIZ_RISP_MUL VALUES ('6', 'Quante sono le dita di una mano?','10', '100', '1000', '5','D', 10, 0,'KAOS2930');
+INSERT INTO QUIZ_RISP_MUL VALUES ('7', 'Quale di questi NON è un colore primario?','rosso', 'verde', 'giallo', 'blu','B', 10, 0,'JAOE0293');
+INSERT INTO QUIZ_RISP_MUL VALUES ('8', 'Quant anni per laurearsi alla triennale?','3', '5', '10', 'non ci si laurea','D', 10, 0,'JDW02845');
+INSERT INTO QUIZ_RISP_MUL VALUES ('9', 'Che voto prenderanno Marzia e Noemi a questo esame?','18', '30', '30 cum laude', 'bocciate','C', 10, 0,'HSOW0384');
+INSERT INTO QUIZ_RISP_MUL VALUES ('10','Cosa si mette nel caffè?','sale', 'zucchero', 'pepe', 'zenzero','B', 10, 0,'JAOD8479');
 
 
 INSERT INTO QUIZ_SVOLTI VALUES('FAG56455','N86006565',1,NULL, 'A',NULL);
