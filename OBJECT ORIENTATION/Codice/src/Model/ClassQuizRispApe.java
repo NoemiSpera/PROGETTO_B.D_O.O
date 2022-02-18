@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class QuizRispApe extends Quiz {
 	
+	private String IdQuizA;
 	private int MaxLength;
 	private float PuntMax;
 	private float PuntMin;
@@ -21,6 +22,12 @@ public class QuizRispApe extends Quiz {
 	
 		//METODI
 	
+	
+	
+	  //getter idquiz
+	public String getIdQuizA() {
+		return IdQuizA;
+	}
 	
 	    //getter and setter MaxLenght
 	public int getMaxlength() {
