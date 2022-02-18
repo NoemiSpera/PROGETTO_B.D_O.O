@@ -3,7 +3,8 @@ package Classes;
 import java.util.ArrayList;
 
 public class QuizRispMul {
-	
+
+	private String IdQuizM;
 	private String RispostaCorretta;
 	private int PuntCorretto;
 	private int PuntErrato;
@@ -31,6 +32,11 @@ public class QuizRispMul {
 	}
 
 	//METODI
+	
+	  //getter id ìQuiz
+	public String getIdQuizM() {
+		return IdQuizM;
+	}
 	
 	   //getter RispostaCorretta
 	public String getRispostaCorretta() {
