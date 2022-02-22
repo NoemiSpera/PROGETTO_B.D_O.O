@@ -1,7 +1,8 @@
 package DAO;
 
-import Classes.Test;
-import Classes.QuizSvolti;
+import Model.Test;
+import Model.QuizSvolti;
+
 
 public interface StudenteDAO extends UtenteDAO{
 
