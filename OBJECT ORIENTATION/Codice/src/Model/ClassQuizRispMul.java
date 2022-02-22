@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class QuizRispMul {
+public class QuizRispMul extends Quiz{
 
 	private String IdQuizM;
 	private String RispostaCorretta;
