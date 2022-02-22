@@ -2,10 +2,10 @@ package DAO;
 
 import java.sql.Date;
 import java.sql.Time;
-import Classes.Test; 
-import Classes.QuizRispApe;
-import Classes.QuizRispMul;
-import Classes.QuizSvolti;
+import Model.Test; 
+import Model.QuizRispApe;
+import Model.QuizRispMul;
+import Model.QuizSvolti;
 
 
 
