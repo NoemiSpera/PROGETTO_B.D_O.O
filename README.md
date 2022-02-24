@@ -7,7 +7,7 @@
 ### Informazioni generiche:
 Link per il documento in latex di basi di dati :https://www.overleaf.com/project/61eb059806a27aa854af1555 
 
-    Link per il documento in latex di object orientation :https://it.overleaf.com/project/6217c3d4888e58025892f0a3
+Link per il documento in latex di object orientation :https://it.overleaf.com/project/6217c3d4888e58025892f0a3
 
 ---
 ### Per accedere ad database:
