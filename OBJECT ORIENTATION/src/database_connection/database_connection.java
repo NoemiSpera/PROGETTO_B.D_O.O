@@ -5,10 +5,10 @@ package database_connection;
     	import java.sql.DriverManager;
     	import java.sql.SQLException;
     	 
-    public class database_connection {
+    public class Database_connection {
 
     		// ATTRIBUTI
-    		private static database_connection instance;
+    		private static Database_connection instance;
     		private Connection connection = null;
     		private String nome = "master";
     		private String password = "Qaz1234!";
@@ -18,7 +18,7 @@ package database_connection;
     		String success = "Connessione al Database effettuata con successo.";
 
     		// COSTRUTTORE
-    		public database_connection() throws SQLException {
+    		public Database_connection() throws SQLException {
     			try {
     				Class.forName(getDriver());
     				setConnection(DriverManager.getConnection(getUrl(), getNome(), password));
@@ -34,11 +34,11 @@ package database_connection;
     				return connection;
     		}
     		
-    		public static database_connection getInstance() throws SQLException {
+    		public static Database_connection getInstance() throws SQLException {
     			if (instance == null) {
-    				instance = new database_connection();
+    				instance = new Database_connection();
     			} else if (instance.getConnection().isClosed()) {
-    				instance = new database_connection();
+    				instance = new Database_connection();
     			}
     			return instance;
     		}
