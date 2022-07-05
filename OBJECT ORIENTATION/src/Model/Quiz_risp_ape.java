@@ -1,46 +1,69 @@
 package model;
 
 
-public class Quiz_risp_ape extends Quiz{
+public class Quiz_risp_mul extends Quiz{
 
-	private int max_lenght;
-	private float punt_max;
-	private float punt_min;
+	private String A;
+	private String B;
+	private String C;
+	private String D;
+	private String risposta_corretta;
+	private int punt_corretto;
+	private int punt_errato;
 	private String id_test;
 
 	
 
- public Quiz_risp_ape (String id_quiz,String domanda, int max_lenght, float punt_max, float punt_min, String id_test) {
+ public Quiz_risp_mul (String id_quiz, String domanda, String A, String B, String C, String D, String risp_corr, int punt_c, int punt_e, String id_test) {
+		this.domanda = domanda;
 		this.id_quiz=id_quiz;
-	 	this.domanda = domanda;
-		this.max_lenght=max_lenght;
-		this.punt_max=punt_max;
-		this.punt_min=punt_min;
+		this.A=A;
+		this.B=B;
+		this.C=C;
+		this.D=D;
+		this.risposta_corretta=risp_corr;
+		this.punt_corretto=punt_c;
+		this.punt_errato=punt_e;
 		this.id_test=id_test;
 		
 	}
-
-
- public String getId_quiz() {
-		return id_quiz;
-	}
-
-
+ 
  public String getDomanda() {
 		return domanda;
 	}
-
- public int getMax_lenght() {
-		return max_lenght;
+ 
+ public String getId_quiz() {
+		return id_quiz;
 	}
  
- public float getPunt_max() {
-		return punt_max;
+ public String getA() {
+		return A;
 	}
-	
- public float getPunt_min() {
-		return punt_min;
+ 
+ public String getB() {
+		return B;
 	}
+ 
+ public String getC() {
+		return C;
+	}
+ 
+ public String getD() {
+		return D;
+	}
+ 
+ public String getRispo_corr() {
+		return risposta_corretta;
+	}
+ 
+ public int getPunt_c() {
+		return punt_corretto;
+	}
+ 
+ public int getPunt_e() {
+		return punt_errato;
+	}
+ 
  public String getId_test() {
 		return id_test;
 	}
