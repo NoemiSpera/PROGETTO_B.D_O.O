@@ -1,19 +1,19 @@
-package Model;
+package model;
 
 public class Utente {
 
-	private String nome;
-	private String cognome;
-	private String login;
-	private String password;
+	protected String nome;
+	protected String cognome;
+	protected String login;
+	protected String password;
 
 
 public Utente(String Nome, String Cognome, String Login, String Password){
 
-	this.setNome(Nome);
-	this.setCognome(Cognome);
-	this.setLogin(Login);
-	this.setPassword(Password);
+	this.nome=Nome;
+	this.cognome=Cognome;
+	this.login=Login;
+	this.password=Password;
 
 }
 
