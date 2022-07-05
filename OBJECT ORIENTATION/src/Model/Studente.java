@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class Studente extends Utente {
 
@@ -6,14 +6,14 @@ public class Studente extends Utente {
 	
 public Studente(String Nome, String Cognome, String Login, String Password, String MatricolaStud) {
 		this.matricolaStud=MatricolaStud;
+		this.nome=Nome;
+		this.cognome=Cognome;
+		this.login=Login;
+		this.password=Password;
 }
 
-public String getMatricolaStud() {
+public String getMatricola_Stud() {
 	return matricolaStud;
-}
-
-public void setMatricolaStud(String matricolaStud) {
-	this.matricolaStud = matricolaStud;
 }
 	 
 	
