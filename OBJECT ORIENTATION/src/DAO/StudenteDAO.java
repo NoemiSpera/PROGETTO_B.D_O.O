@@ -1,6 +1,7 @@
-package DAO;
-import Model.*;
+package dao;
 import database_connection.*;
+import model.*;
+
 import java.sql.*;
 
 public interface StudenteDAO {
