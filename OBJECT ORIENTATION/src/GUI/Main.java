@@ -12,15 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import controller.*;
+
 import java.awt.FlowLayout;
-import Controlller.*;
+import java.awt.Toolkit;
 
 ;
 
 public class Main {
 private JFrame frame;
 private JTextField textField;
-controller contr=new controller();
+Controller contr=new Controller();
 
 String loginn;
 
@@ -53,4 +56,3 @@ private void initialize() {
 }
 
 }
-
