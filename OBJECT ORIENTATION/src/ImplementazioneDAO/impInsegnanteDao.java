@@ -1,26 +1,48 @@
 package implementazioneDao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import Model.Insegnante;
-import database_connection.database_connection;
+import database_connection.Database_connection;
+import model.Insegnante;
 
-public class impInsegnanteDao {
+public class ImpInsegnanteDao {
 
 	public Connection connessione;
 	
 	public void InsegnanteDAO() {
         try {
-            connessione = database_connection.getInstance().getConnection();
+            connessione = Database_connection.getInstance().getConnection();
         } catch (SQLException e) {
             System.out.println("Connessione fallita.");
             e.printStackTrace();
         }
     }
 
-	public void InserisciIns(Insegnante i) {
-		// TODO Auto-generated method stub
+public void InserisciIns(Insegnante i) {
+		
+	    try {
+	        connessione = Database_connection.getInstance().getConnection();
+	    } catch (SQLException e) {
+	        System.out.println("Connessione fallita.");
+	        e.printStackTrace();
+	    }
+		
+		PreparedStatement insert;
+     
+        try {
+            insert = connessione.prepareStatement(
+                    "INSERT INTO INSEGNANTE VALUES ('"+i.getMatricola_Ins()+"','"+i.getNome()+"','"+i.getCognome()+"','"+i.getLogin()+"','"+i.getPassword()+"');");
+
+        insert.executeUpdate();
+
+        } 
+        catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
 		
 	}
 	
