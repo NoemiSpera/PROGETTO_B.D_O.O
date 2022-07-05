@@ -10,7 +10,7 @@ Link per il documento in latex di basi di dati :https://www.overleaf.com/project
 Link per il documento in latex di object orientation :https://it.overleaf.com/project/6217c3d4888e58025892f0a3
 
 ---
-### Per accedere ad database:
+### Per accedere al database:
 ```
 User: professore
 Password: silviobarra
