@@ -1,300 +1,290 @@
 package GUI;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.*;
-import java.util.Properties;
+
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JComboBox;
-import javax.swing.JPasswordField;
-import java.awt.TextField;
-import java.awt.Font;
-import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.toedter.calendar.JCalendar;
-
-import java.awt.Container;
-
-import Controlller.controller;
-import DAO.CorsoDAO;
-import DAO.TestDAO;
-
-import javax.swing.JCheckBox;
-import java.awt.Checkbox;
-import java.awt.Choice;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.SwingConstants;
-
-
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.ListSelectionModel;
-import java.awt.Panel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-import javax.swing.SpinnerListModel;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-
-import java.util.Date;
-import java.util.Calendar;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTextPane;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SignInI extends JFrame implements ActionListener {
-	private JPasswordField passwordField;
-	private JTextField textFieldCodice;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JPanel panel = new JPanel();
-	private JCalendar calendar = new JCalendar();
-	private JCalendar calendar2 = new JCalendar();
-	private JPanel panel2 = new JPanel();
-	private JPanel panel3= new JPanel();
-	List<String> cose = new ArrayList<String>();
-	List<String> te = new ArrayList<String>();
-	private JComboBox comboBox;	
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.Font;
+import com.toedter.calendar.JCalendar;
+
+import controller.Controller;
+import java.awt.Color;
+
+
+public class SignInI extends JFrame{
+
 	private JComboBox comboBox_1;
-	private TestDAO test=new TestDAO();
- 
+	private Controller contr= new Controller();
+	private List<String> te;
 	
-
-	public SignInI(controller contr, String login) {
-		getContentPane().setLayout(null);
-		te.clear();
-		CorsoDAO cors= new CorsoDAO();
-		//String [] arr=(String[]) cose.toArray(new String[cose.size()]);
-		cose=cors.riempiCbox(login, cose);
-		comboBox = new JComboBox(cose.toArray());
+	public SignInI(Controller contr, String login) {
+		getContentPane().setBackground(new Color(153, 204, 255));
+	getContentPane().setLayout(null);
+	
+	
+	
+	List<String> cose = new ArrayList<String>();
+	
+	cose=contr.riempiCbox(login, cose);
+	
+	
+	te = new ArrayList<String>();
 		
+	
+	JPanel panel = new JPanel();
+	panel.setBackground(new Color(153, 204, 255));
+	panel.setBounds(0, 0, 577, 473);
+	getContentPane().add(panel);
+	panel.setLayout(null);
 		
-
-		
-
-		
-		JLabel lblTitolo = DefaultComponentFactory.getInstance().createTitle(" Area Insegnanti");
-		lblTitolo.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblTitolo.setBounds(0, 0, 156, 19);
-		getContentPane().add(lblTitolo);
-		
-		panel2.setBounds(282, 108, 146, 110);
-		getContentPane().add(panel2);
-		panel2.setLayout(null);
-		panel2.setVisible(false);
-		
-		panel3.setBounds(282, 108, 146, 110);
-		getContentPane().add(panel2);
-		panel3.setLayout(null);
-		panel3.setVisible(false);
-		
-		
-		JLabel lblTest = new JLabel("Test");
-		lblTest.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblTest.setBounds(10, 11, 49, 14);
-		panel2.add(lblTest);
-		
-		
-		
-		JButton btnIndietro = new JButton("Cambia corso");
-		btnIndietro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panel2.setVisible(false);
-			}
-		});
-		
-		
-		
-		
-		te.clear();
-		comboBox.addActionListener(this);
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					if(e.getSource()==comboBox){
-					panel2.setVisible(true);
-					te.clear();
-					comboBox_1 = new JComboBox();
-					comboBox_1.removeAllItems();
-					te=test.riempiCBoxTest(comboBox.getSelectedItem().toString(), te);
-					//String [] arr1=(String[]) te.toArray(new String[te.size()]);
-					comboBox_1 = new JComboBox(te.toArray());
-					comboBox_1.setBounds(10, 34, 126, 22);
-					panel2.add(comboBox_1);
-					
+	JComboBox comboBox;
+	
+	JPanel panel_1 = new JPanel();
+	panel_1.setBackground(new Color(153, 204, 255));
+	panel_1.setBounds(10, 56, 240, 237);
+	panel.add(panel_1);
+	panel_1.setLayout(null);
+	
+	comboBox= new JComboBox(cose.toArray());
+	comboBox.setFont(new Font("Cambria Math", Font.PLAIN, 13));
+	comboBox.setBounds(10, 51, 142, 22);
+	panel_1.add(comboBox);
+	
+	
+	JLabel lblTest = new JLabel("Test");
+	lblTest.setFont(new Font("Cambria Math", Font.PLAIN, 16));
+	lblTest.setBounds(10, 114, 49, 14);
+	lblTest.setVisible(false);
+	panel_1.add(lblTest);
+	
+	
+	JButton btnAddTest = new JButton("Aggiungi test");
+	
+	JButton btnCambiaCorso = new JButton("Cambia Corso");
+	btnCambiaCorso.setFont(new Font("Cambria Math", Font.PLAIN, 14));
+	btnCambiaCorso.setBackground(new Color(255, 255, 255));
+	btnCambiaCorso.setBounds(10, 203, 142, 23);
+	btnCambiaCorso.setVisible(false);
+	panel_1.add(btnCambiaCorso);
+	btnCambiaCorso.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			comboBox_1.setVisible(false);
+			btnCambiaCorso.setVisible(false);
+			lblTest.setVisible(false);
+			btnAddTest.setVisible(false);
 		}
+	});
+	
+	
+	JLabel lblCorso = new JLabel("Corso");
+	lblCorso.setFont(new Font("Cambria Math", Font.PLAIN, 16));
+	lblCorso.setBounds(10, 26, 90, 16);
+	panel_1.add(lblCorso);
+	
+	JPanel panel_2 = new JPanel();
+	panel_2.setBackground(new Color(153, 204, 255));
+	panel_2.setBounds(315, 11, 262, 436);
+	panel.add(panel_2);
+	panel_2.setLayout(null);
+	panel_2.setVisible(false);
+	
+	JButton btnAddCorso = new JButton("Aggiungi Corso");
+	btnAddCorso.setBackground(new Color(255, 255, 255));
+	btnAddCorso.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			panel_2.setVisible(true);
+		}
+	});
+	btnAddCorso.setFont(new Font("Cambria Math", Font.PLAIN, 14));
+	btnAddCorso.setBounds(10, 80, 142, 23);
+	panel_1.add(btnAddCorso);
+	
+	
+	btnAddTest.setVisible(false);
+	btnAddTest.setBackground(new Color(255, 255, 255));
+	btnAddTest.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			System.out.println(comboBox.getSelectedItem());
+			CreazioneTest ct= new CreazioneTest(contr, login,comboBox.getSelectedItem().toString());
+			ct.setBounds(100, 200, 650, 450);
+			ct.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			ct.show();
+			dispose();
+		}
+	});
+	btnAddTest.setFont(new Font("Cambria Math", Font.PLAIN, 14));
+	btnAddTest.setBounds(10, 169, 142, 23);
+	panel_1.add(btnAddTest);
+	
+	JLabel lblTitolo = new JLabel("Area Insegnanti");
+	lblTitolo.setFont(new Font("Cambria Math", Font.PLAIN, 20));
+	lblTitolo.setBounds(5, 0, 216, 29);
+	panel.add(lblTitolo);
+	
+
+	
+	JLabel lblCodiceCorso = new JLabel("Codice del corso");
+	lblCodiceCorso.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	lblCodiceCorso.setBounds(0, 34, 133, 21);
+	panel_2.add(lblCodiceCorso);
+	
+	JTextField textFieldCodice = new JTextField();
+	textFieldCodice.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	textFieldCodice.setBounds(143, 35, 118, 20);
+	textFieldCodice.setColumns(10);
+	panel_2.add(textFieldCodice);
+	
+	JLabel lblNewLabelNomeCorso = new JLabel("Nome del corso");
+	lblNewLabelNomeCorso.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	lblNewLabelNomeCorso.setBounds(0, 78, 122, 21);
+	panel_2.add(lblNewLabelNomeCorso);
+	
+	JTextField textField = new JTextField();
+	textField.setFont(new Font("Cambria Math", Font.PLAIN, 11));
+	textField.setBounds(142, 80, 119, 20);
+	textField.setColumns(10);
+	panel_2.add(textField);
+
+	
+	JLabel lblNewLabelDatai = new JLabel("Data inizio");
+	lblNewLabelDatai.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	lblNewLabelDatai.setBounds(0, 131, 85, 21);
+	panel_2.add(lblNewLabelDatai);
+	
+	JLabel lblNewLabelDataFine = new JLabel("Data fine");
+	lblNewLabelDataFine.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	lblNewLabelDataFine.setBounds(0, 265, 85, 21);
+	panel_2.add(lblNewLabelDataFine);
+	
+	JLabel lblTitolo_1 = new JLabel("Aggiunta corso");
+	lblTitolo_1.setFont(new Font("Cambria Math", Font.PLAIN, 20));
+	lblTitolo_1.setBounds(0, 0, 208, 25);
+	panel_2.add(lblTitolo_1);
+	
+	JCalendar calendar = new JCalendar();
+	calendar.setBounds(83, 135, 177, 108);
+	panel_2.add(calendar);
+	
+	JCalendar calendar2 = new JCalendar();
+	calendar2.setBounds(83, 270, 178, 108);
+	panel_2.add(calendar2);
+	
+	
+	JButton btnHome = new JButton("Home");
+	btnHome.setBackground(new Color(255, 255, 255));
+	btnHome.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			Home ho=new Home(contr);
+			ho.setBounds(100, 200, 450, 300);
+			ho.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			ho.show();
+			dispose();
+		}
+	});
+	btnHome.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	btnHome.setBounds(50, 424, 89, 23);
+	panel.add(btnHome);
+	
+	
+	
+	comboBox.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent evt) {
+	    	
+	        Object selectedValue = comboBox.getSelectedItem();
+	        System.out.println(selectedValue);
+	        
+	        if(comboBox.getSelectedItem()!=null) {
+	        	btnCambiaCorso.setVisible(true);
+	        	btnAddTest.setVisible(true);
+	        	te.clear();
+	        	te=contr.riempiCBoxTest(selectedValue.toString(), te);
+	        	
+	       
+	        
+	    	comboBox_1= new JComboBox(te.toArray());
+	    	comboBox_1.setBounds(10, 135, 142, 22);
+	    	comboBox_1.setFont(new Font("Cambria Math", Font.PLAIN, 13));
+	    	comboBox_1.setVisible(true);
+	    	lblTest.setVisible(true);
+	    	panel_1.add(comboBox_1);
+	    	
+	    	comboBox_1.addActionListener(new ActionListener() {
+	    	    public void actionPerformed(ActionEvent evt) {
+	    	        Object selectedValue = comboBox_1.getSelectedItem();
+	    	        System.out.println("selected "+selectedValue);
+	    			ValutazioneTest vt=new ValutazioneTest(contr,selectedValue.toString(), login);
+	    			vt.setBounds(100, 200, 650, 520);
+	    			vt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    			vt.show();
+	    			dispose();
+	    	        
+	    	    }
+
+	    	});
+	         	
+	        	
+	        	
+	    }else {
+	    	System.out.println("selected null");
+	    }
+	    }
+
+	});
+	
+	
+	JButton btnConferma = new JButton("Conferma");
+	btnConferma.setBackground(new Color(255, 255, 255));
+	btnConferma.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			java.sql.Date sqlDate1 = new java.sql.Date(calendar.getDate().getTime());
+			java.sql.Date sqlDate2 = new java.sql.Date(calendar2.getDate().getTime());
+			contr.registraCorso(textFieldCodice.getText(), textField.getText(), contr.getMatricolaI(login), sqlDate1, sqlDate2);
+			comboBox.addItem(textFieldCodice.getText());
+			//te.add(textField.getText());
+		}
+	});
+	btnConferma.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	btnConferma.setBounds(0, 413, 111, 23);
+	panel_2.add(btnConferma);
+	
+	
+	
+	
+	JButton btnAnnulla = new JButton("Indietro");
+	btnAnnulla.setBackground(new Color(255, 255, 255));
+	btnAnnulla.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			comboBox.setVisible(true);
+			btnAddCorso.setVisible(true);
+			panel_2.setVisible(false);
+			lblCorso.setVisible(true);
+		}
+	});
+	btnAnnulla.setFont(new Font("Cambria Math", Font.PLAIN, 17));
+	btnAnnulla.setBounds(142, 413, 119, 23);
+	panel_2.add(btnAnnulla);
+	
+	
+	
 	}
-			
 	
-		});
-		
-		
-		
-			
-		comboBox.setMaximumRowCount(100);
-		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		comboBox.setBounds(282, 41, 138, 22);
-		getContentPane().add(comboBox);
-
-
-		
-		panel.setBounds(10, 21, 262, 399);
-		panel.setLayout(null);
-		getContentPane().add(panel);
-		panel.setVisible(false);
-		
-		
-		JLabel lblCodiceCorso = new JLabel("Codice del corso");
-		lblCodiceCorso.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblCodiceCorso.setBounds(0, 2, 125, 21);
-		panel.add(lblCodiceCorso);
-		
-		textFieldCodice = new JTextField();
-		textFieldCodice.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		textFieldCodice.setBounds(149, 2, 96, 20);
-		textFieldCodice.setColumns(10);
-		panel.add(textFieldCodice);
-		
-		JLabel lblNewLabelNomeCorso = new JLabel("Nome del corso");
-		lblNewLabelNomeCorso.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblNewLabelNomeCorso.setBounds(0, 40, 125, 14);
-		panel.add(lblNewLabelNomeCorso);
-		
-		textField = new JTextField();
-		textField.setBounds(149, 40, 96, 20);
-		textField.setColumns(10);
-		panel.add(textField);
-		
-		
-		JLabel lblNewLabelIns = new JLabel("Matricola insegnante");
-		lblNewLabelIns.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblNewLabelIns.setBounds(0, 79, 145, 14);
-		panel.add(lblNewLabelIns);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(149, 78, 96, 20);
-		textField_1.setColumns(10);
-		panel.add(textField_1);
-
-		
-		JLabel lblNewLabelDatai = new JLabel("Data inizio");
-		lblNewLabelDatai.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblNewLabelDatai.setBounds(0, 130, 101, 14);
-		panel.add(lblNewLabelDatai);
-		
-		JLabel lblNewLabelDataFine = new JLabel("Data fine");
-		lblNewLabelDataFine.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblNewLabelDataFine.setBounds(0, 253, 84, 14);
-		panel.add(lblNewLabelDataFine);
-		
-		JButton btnConferma = new JButton("Conferma");
-		btnConferma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				contr.registraCorso(textFieldCodice.getText(), textField.getText(), textField_1.getText(), calendar.getDate().toString(), calendar2.getDate().toString());
-				 System.out.println("corso inserito");
-			}
-		});
-		btnConferma.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnConferma.setBounds(0, 376, 111, 23);
-		panel.add(btnConferma);
-		
-		JButton btnAnnulla = new JButton("Indietro");
-		btnAnnulla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panel.setVisible(false);
-			}
-		});
-		btnAnnulla.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnAnnulla.setBounds(143, 376, 119, 23);
-		panel.add(btnAnnulla);
-		
-		
-
-		JButton btnAdd = new JButton("Aggiungi corso");
-		btnAdd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panel.setVisible(true);
-			}
-		});
-
-		btnAdd.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnAdd.setBounds(290, 74, 138, 23);
-		getContentPane().add(btnAdd);
-		
-
-		btnIndietro.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnIndietro.setBounds(10, 75, 136, 23);
-		panel2.add(btnIndietro);
-		
-		
-
-		JLabel lblCodiceTest = new JLabel("Codice del test");
-		lblCodiceTest.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lblCodiceTest.setBounds(0, 2, 125, 21);
-		panel3.add(lblCodiceTest);
-		
-		
-		
-		
-		JButton btnAggiungiTest = new JButton("Aggiungi test");
-		btnAdd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panel3.setVisible(true);
-			}
-		});
-
-		btnAggiungiTest.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnAggiungiTest.setBounds(290, 74, 138, 23);
-		getContentPane().add(btnAggiungiTest);
-
-		calendar.setSize(171, 112);
-		calendar.setLocation(79, 130);
-		panel.add(calendar);
-		
-		calendar2.setSize(171, 112);
-		calendar2.setLocation(79, 255);
-		panel.add(calendar2);
-		
-		JButton btnHome = new JButton("Home");
-		btnHome.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Home ho=new Home(contr);
-				ho.setBounds(100, 100, 450, 300);
-				ho.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				ho.show();
-				dispose();
-			}
-		});
-		btnHome.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		btnHome.setBounds(339, 229, 89, 23);
-		getContentPane().add(btnHome);
-		
-		
-
-		
-
-}
-
-
+	
 
 	
-	@Override
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
-		te=test.riempiCBoxTest(comboBox.getSelectedItem().toString(), te);
 		
 	}
 }
