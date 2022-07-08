@@ -173,10 +173,6 @@ import javax.swing.JTextPane;
 
 		
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(10, 24, 133, 22);
-		panel_2.add(comboBox_2);
-		
 		JButton btnBack = new JButton("Indietro");
 		btnBack.setFont(new Font("Cambria Math", Font.PLAIN, 13));
 		btnBack.addActionListener(new ActionListener() {
